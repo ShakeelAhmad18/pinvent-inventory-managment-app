@@ -4,11 +4,14 @@ const bodyParser=require('body-parser')
 const express=require('express')
 const cors=require('cors')
 const userRoute=require('./routes/userRoute')
+const cookieParser=require('cookie-parser')
 
 const app=express();
 
 //middleware
+app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
 app.use(express.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
@@ -27,9 +30,6 @@ app.use('/api/users',userRoute)
 
 
 const PORT = 5000;
-
-
-
 
 
 app.listen(PORT,()=>{
