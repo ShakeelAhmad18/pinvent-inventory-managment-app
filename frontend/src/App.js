@@ -8,6 +8,11 @@ import Reset from './pages/auth/Reset'
 import Sidebar from './components/sidebar/Sidebar';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/dashboard/Dashboard';
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios';
+
+axios.defaults.withCredentials=true;
 
 function App() {
   return (
@@ -25,6 +30,7 @@ function App() {
              </Layout>
           </Sidebar>}/>
         </Routes>
+        <ToastContainer/>
       </BrowserRouter>
     </div>
   );
