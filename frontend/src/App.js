@@ -11,10 +11,25 @@ import Dashboard from './pages/dashboard/Dashboard';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import axios from 'axios';
+import { useEffect } from 'react';
+import { getLoginStatus } from './services/authServices';
+import { useDispatch } from 'react-redux';
+import { SET_LOGIN } from './redux/features/auth/authSlice';
 
 axios.defaults.withCredentials=true;
 
 function App() {
+
+  const dispatch=useDispatch()
+
+  useEffect(()=>{
+    async function loginStatus(){
+    const status= await getLoginStatus()
+    dispatch(SET_LOGIN(status))
+    }
+    loginStatus();
+  },[dispatch])
+
   return (
     <div>
       <BrowserRouter>

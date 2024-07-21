@@ -1,3 +1,4 @@
+//import { asyncThunkCreator } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -62,5 +63,56 @@ export const registerUser=async (userData)=>{
 
         toast.error(message)
     }
+
+ }
+//forgot passowrd
+ export const forgotPassword= async (userdata)=>{
+    try {
+        const res=await axios.post(`${BACKEND_URL}/api/users/forgotpassword`,userdata)
+
+           toast.success(res.data.message)
+           return res.data
+
+    } catch (error) {
+         const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+ }
+
+ //reset Password
+
+  export const resetPassword=async (userdata,resetToken)=>{
+    
+
+    try {
+
+        const res=await axios.put(`${BACKEND_URL}/api/users/resetpassword/${resetToken}`,userdata);
+        
+        return res.data;
+
+    } catch (error) {
+        
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+
+ }
+
+ // get login Status
+
+export const getLoginStatus=async ()=>{
+
+    try {
+        const res= await axios.get(`${BACKEND_URL}/api/users/loggedin`)
+
+        return res.data;
+    } catch (error) {
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+
 
  }

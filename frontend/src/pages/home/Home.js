@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './home.scss'
 import { LiaProductHunt } from "react-icons/lia";
 import heroImg from '../../assets/inv-img.png'
+import { ShowOnLogin, ShowOnLogout } from '../../components/protect/HiddenLink';
 
 const Home = () => {
   return (
@@ -12,6 +13,8 @@ const Home = () => {
            <LiaProductHunt size={35}/> 
          </div>
          <ul className='home-links'>
+          {/* This is when Show then user is logout*/}
+          <ShowOnLogout>
            <li>
              <Link to='/register'>Register</Link>
            </li>
@@ -20,11 +23,16 @@ const Home = () => {
                 <Link to='/login'>Login</Link>
             </button>
            </li>
+           </ShowOnLogout>
+         {/* This is when Show then user is login*/}
+           <ShowOnLogin>
            <li>
              <button className='--btn --btn-primary'>
-              <Link to='/dashboard'>Dashboard</Link>
+                  <Link to='/dashboard'>Dashboard</Link> 
              </button>
            </li>
+           </ShowOnLogin>
+          
          </ul>
       </nav>
       {/* Hero Section */}
