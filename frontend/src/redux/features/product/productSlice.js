@@ -16,7 +16,7 @@ const initialState={
 
 //Cretate a New Product
 
- const createProduct=createAsyncThunk(
+ export const createProduct=createAsyncThunk(
     'product/create',
     async (formData,thunkApi)=>{
         try {
@@ -44,6 +44,7 @@ const productSlice=createSlice({
     extraReducers:(builder)=>{
        builder
             .addCase(createProduct.pending,(state)=>{state.isLoading=true})
+
             .addCase(createProduct.fulfilled,(state,action)=>{
                 state.isLoading=false;
                 state.isSuccess=true;
@@ -51,6 +52,7 @@ const productSlice=createSlice({
                 state.products.push(action.payload);
                 toast.success('Products Added Successfully')
             })
+
             .addCase(createProduct.rejected,(state,action)=>{
                 state.isLoading=false;
                 state.isError=true
