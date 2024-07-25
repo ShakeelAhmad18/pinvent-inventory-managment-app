@@ -84,6 +84,26 @@ export const createProduct=createAsyncThunk(
     }
  )
 
+ //update product
+
+ export const updateProduct=createAsyncThunk(
+    'products/update',
+    async ({id,formData},thunkApi)=>{
+
+     try {
+        return await productServices.updateProduct(id,formData)
+     } catch (error) {
+        
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+            console.log(message)
+
+        thunkApi.rejectWithValue(message)
+     }
+
+    }
+ )
+
 
 
  //product Slice
@@ -124,7 +144,7 @@ const productSlice=createSlice({
             if(number === 0 || number === '0'){
               count++;
             }
-          });
+          });  
 
           state.outOfStock=count;
         },
@@ -183,22 +203,22 @@ const productSlice=createSlice({
                 state.isSuccess=true
                 toast.success('Product Deleted Successfully')
             })
-            .addCase(getproducts.rejected,(state,action)=>{
+            .addCase(deleteproduct.rejected,(state,action)=>{
                 state.isLoading=false;
                 state.isError=true;
                 state.message=action.payload;
                 toast.error(action.payload);
             })
-            .addCase(getproducts.pending,(state)=>{
+            .addCase(updateProduct.pending,(state)=>{
                 state.isLoading=true
             })
-            .addCase(getproducts.fulfilled,(state,action)=>{
+            .addCase(updateProduct.fulfilled,(state,action)=>{
                 state.isLoading=false;
                 state.isError=false;
                 state.isSuccess=true
-                state.product=action.payload
+                toast.success('Product Updated Successfully')
             })
-            .addCase(deleteproduct.rejected,(state,action)=>{
+            .addCase(updateProduct.rejected,(state,action)=>{
                 state.isLoading=false;
                 state.isError=true;
                 state.message=action.payload;
@@ -210,7 +230,7 @@ const productSlice=createSlice({
 export const selectIsLoading=(state)=>state.product.isLoading;
 
 export const selectTotalvalue=(state)=>state.product.totalStoreValue;
-
+export const selectProduct=(state)=>state.product.product;
 
 export const {cal_store_value,cal_outOfStack,cal_category}=productSlice.actions;
 

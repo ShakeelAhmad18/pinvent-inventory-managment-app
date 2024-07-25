@@ -17,6 +17,8 @@ const ProductDetails = () => {
  const {id}= useParams()
   const {product,isLoading,isError,message}=useSelector((state)=>state.product)
 
+  console.log(product)
+
   const stackStatus=(quantity)=>{
     if(quantity > 0){
      return <span className='--color-success'>In Stack</span>
@@ -40,44 +42,45 @@ const ProductDetails = () => {
     <div className='product-detail'>
       <h3 className='--mt'>Product Detail</h3>
       <Card cardClass='card'>
+        {console.log(product)}
          {isLoading && <Loader/>}
          {product && (
           <div className='detail'>
              <Card cardClass='group'>
                 {product?.image ? (
-                  <img src={product.image.filePath} alt={product.image.fileName} />
+                  <img src={product?.image.filePath} alt={product?.image.fileName} />
                 ) : (<p>There is not Product with this product</p>)}
 
              </Card>
-             <h4>Product Availibility: {stackStatus(product.quantity)} </h4>
+             <h4>Product Availibility: {stackStatus(product?.quantity)} </h4>
              <hr />
              <h4>
-              <span className='badge'>Name:</span> &nbsp;{product.name}
+              <span className='badge'>Name:</span> &nbsp;{product?.name}
              </h4>
              <p>
               <b>&rarr;SKU:</b> {product.sku}
              </p>
              <p>
-              <b>&rarr;Category:</b> {product.category}
+              <b>&rarr;Category:</b> {product?.category}
              </p>
              <p>
-              <b>&rarr;Price:</b> {'$'}{product.price}
+              <b>&rarr;Price:</b> {'$'}{product?.price}
              </p>
              <p>
-              <b>&rarr;Quantity in Stack:</b> {product.quantity}
+              <b>&rarr;Quantity in Stack:</b> {product?.quantity}
              </p>
              <p>
-              <b>&rarr;Total Value in Stack:</b> {'$'}{product.quantity * product.price}
+              <b>&rarr;Total Value in Stack:</b> {'$'}{product?.quantity * product?.price}
              </p>
              <hr />
              <p><b>&rarr;Description:</b></p>
              <div dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(product.description)
+              __html: DOMPurify.sanitize(product?.description)
              }}>
              </div>
              <hr />
-             <code className='--color-dark'>CreatedAt:{product.createdAt}</code> <br />
-             <code className='--color-dark'>Last UpdatedAt:{product.updatedAt}</code>
+             <code className='--color-dark'>CreatedAt:{product?.createdAt}</code> <br />
+             <code className='--color-dark'>Last UpdatedAt:{product?.updatedAt}</code>
           </div>
          )}
       </Card>

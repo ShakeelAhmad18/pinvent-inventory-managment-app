@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux';
 import { SET_LOGIN } from './redux/features/auth/authSlice';
 import AddProduct from './pages/addProduct/AddProduct'
 import ProductDetails from './components/productDetails/ProductDetails';
+import EditProduct from './pages/editProduct.js/EditProduct';
 
 axios.defaults.withCredentials=true;
 
@@ -54,6 +55,11 @@ function App() {
           <Route path='/product-detail/:id' element={<Sidebar>
              <Layout>
               <ProductDetails/>
+             </Layout>
+          </Sidebar>}/>
+          <Route path='/edit-product/:id' element={<Sidebar>
+             <Layout>
+              <EditProduct/>
              </Layout>
           </Sidebar>}/>
         </Routes>

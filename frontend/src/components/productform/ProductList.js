@@ -65,7 +65,7 @@ const ProductList = ({products,isLoading}) => {
   const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
   
-  const handlePageClick = (event) => {
+  const handlePageClick = (event) => { 
     const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
@@ -140,7 +140,7 @@ const ProductList = ({products,isLoading}) => {
                                         {<Link to={`/product-detail/${_id}`}> <AiOutlineEye size={25} color={'purple'}/> </Link>}
                                       </span>
                                       <span>
-                                        {<FaEdit size={25} color={'green'}/>}
+                                        {<Link to={`/edit-product/${_id}`}> <FaEdit size={25} color={'green'}/> </Link>}
                                       </span>
                                       <span>
                                         {<FaTrashAlt size={25} color={'red'} onClick={()=>ConfirmDeleteProduct(_id)}/>}

@@ -36,10 +36,16 @@ const getProduct=async (id)=>{
     return res.data;
 }
 
+const updateProduct=async (id,formData)=>{
+   const res=await axios.patch(`${API_URL}${id}`,formData)
+   return res.data;
+}
+
 
 export const productServices={
    createProduct,
    getProdusts,
    deleteProduct,
    getProduct,
+   updateProduct,
 }

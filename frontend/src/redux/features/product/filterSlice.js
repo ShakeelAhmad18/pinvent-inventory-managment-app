@@ -12,6 +12,10 @@ const filterSlice=createSlice({
     reducers:{
         FILTER_PRODUCTS(state,action){
             const {products,search}=action.payload;
+            if (!Array.isArray(products)) {
+                console.error('products is not an array'); // Add this line to debug
+                return;
+            }
         
             const tempProduct=
              products.filter((product)=>

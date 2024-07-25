@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { cal_outOfStack, cal_store_value, selectCatogory, selectOutOfStack, selectTotalvalue,cal_category } from '../../redux/features/product/productSlice'
 
 
-
 const earningIcon=<AiFillDollarCircle size={45} color='#fff'/>
 const productIcon=<BsCart4 size={45} color='#fff'/>
 const categoryIcon=<BiCategory size={45} color='#fff'/>
