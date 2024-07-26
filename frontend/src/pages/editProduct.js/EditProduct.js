@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import {getProduct, getproducts, selectIsLoading, selectProduct, updateProduct } from '../../redux/features/product/productSlice'
+import {getproducts, selectIsLoading, selectProduct, updateProduct } from '../../redux/features/product/productSlice'
 import Loader from '../../components/loader/Loader'
 import ProductForm from '../../components/productform/ProductForm'
 
@@ -12,13 +12,12 @@ const EditProduct = () => {
     const editProduct=useSelector(selectProduct)
     const isLoading =useSelector(selectIsLoading)
 
-
     const [product,setProduct]=useState(editProduct)
     const [productImage,setProductImage]=useState('');
     const [imagePreview,setImagePreview]=useState(null);
     const [description,setDiscription]=useState('')
 
-    console.log(product)
+    
 
     function handleInputChange(e){
       const {name,value}=e.target;
@@ -38,23 +37,21 @@ const EditProduct = () => {
  }
 
     useEffect(()=>{
-      dispatch(getproducts(id))
+      dispatch(getproducts())
     },[dispatch,id])
 
 
-    useEffect(()=>{
-      setProduct(editProduct)
-    
-      setImagePreview(
-        editProduct && editProduct.image ? `${editProduct.image.filePath}` : null
-      )
-
-      setDiscription(
-        editProduct && editProduct.description ?  editProduct.description : ''  
-      )
-
-    },[editProduct])
-
+    useEffect(() => {
+      dispatch(getproducts(id));
+    }, [dispatch,id]);
+  
+    useEffect(() => {
+      if (editProduct) {
+        setProduct(editProduct);
+        setImagePreview(editProduct.image ? editProduct.image.filePath : null);
+        setDiscription(editProduct.description || '');
+      }
+    }, [editProduct, id]);
     console.log(description)
 
 
@@ -72,7 +69,6 @@ const EditProduct = () => {
       }
       formData.append('sku',generateSKU(product?.category))
       await dispatch(updateProduct({id,formData}))
-      await dispatch(getProduct())
       navigate('/dashboard')
     }
   

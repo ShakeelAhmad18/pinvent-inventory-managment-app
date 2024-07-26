@@ -69,7 +69,9 @@ const getProducts=asyncHandler( async (req,res)=>{
 //get single product
 
 const getSingleProduct=asyncHandler( async (req,res)=>{
-    const product=await Product.findById(req.params.id)
+    const { id } = req.params;
+    
+    const product=await Product.findById(id)
     //if product does not exist
     if(!product){
         res.status(404)
@@ -141,7 +143,7 @@ const updateProduct=asyncHandler( async (req,res)=>{
            fileName:req.file.originalname,
            filePath:uploadFile.secure_url,
            fileType:req.file.type,
-           fileSize: fileSizeFormeter(req.file.size,2)
+           fileSize: fileSizeFormatter(req.file.size,2)
        }
    
    }

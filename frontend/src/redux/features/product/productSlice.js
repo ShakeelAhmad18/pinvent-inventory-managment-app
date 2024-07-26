@@ -184,7 +184,7 @@ const productSlice=createSlice({
             .addCase(getProduct.pending,(state)=>{state.isLoading = true})
             .addCase(getProduct.fulfilled,(state,action)=>{
                 state.isLoading=false;
-                state.product=action.payload;
+                state.products=action.payload;
                 state.isError=false;
                 state.isSuccess=true;
             })
@@ -223,6 +223,19 @@ const productSlice=createSlice({
                 state.isError=true;
                 state.message=action.payload;
                 toast.error(action.payload);
+            })
+            .addCase(getproducts.pending,(state)=>{state.isLoading = true})
+            .addCase(getproducts.fulfilled,(state,action)=>{
+                state.isLoading=false;
+                state.product=action.payload;
+                state.isError=false;
+                state.isSuccess=true;
+            })
+            .addCase(getproducts.rejected,(state,action)=>{
+                state.isLoading=false;
+                state.isError=true;
+                state.message=action.payload
+                toast.error(action.payload)
             })
     }
 })

@@ -116,3 +116,34 @@ export const getLoginStatus=async ()=>{
 
 
  }
+
+ // get User
+
+ export const getUser=async ()=>{
+    try {
+        
+     const res=await axios.get(`${BACKEND_URL}/api/users/getuser`)
+      return res.data
+      
+    } catch (error) {
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+ }
+
+ //update the User
+
+ export const updateUser=async (formData)=>{
+    try {
+        
+      const res=await axios.patch(`${BACKEND_URL}/api/users/updateuser`,formData)
+      return res.data;
+
+    } catch (error) {
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+
+ }

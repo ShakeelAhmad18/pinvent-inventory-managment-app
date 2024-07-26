@@ -11,8 +11,9 @@ const Dashboard = () => {
   useRedirectLogoutUser('/login')
 
   const isLoggedIn=useSelector(selectLoggedIn)
-  const {isLoading,message,product,isError}= useSelector((state)=>state.product)
+  const {isLoading,message,isError}= useSelector((state)=>state.product)
   
+  const products=useSelector((state)=>state.product.products)
   
   useEffect(()=>{
 
@@ -28,8 +29,8 @@ const Dashboard = () => {
 
   return (
     <div>
-     <ProductSummary product={product} />
-      <ProductList products={product} isLoading={isLoading}/>
+     <ProductSummary product={products} />
+      <ProductList products={products} isLoading={isLoading}/>
     </div>
   )
 }
