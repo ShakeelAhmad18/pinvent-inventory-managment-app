@@ -7,6 +7,7 @@ import Loader from '../../components/loader/Loader'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { updateUser } from '../../services/authServices'
+import ChangePassword from '../../components/changepassword/ChangePassword'
 
 
 const EditProfile = () => {
@@ -142,6 +143,8 @@ const EditProfile = () => {
             </form>
           </Card>
         )}
+         <br/>
+         <ChangePassword/>
      </>
     </div>
   )

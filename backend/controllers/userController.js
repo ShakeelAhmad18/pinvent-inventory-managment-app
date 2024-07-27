@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const crypto=require('crypto')
-const token = require("../models/tokenModel")
+const tokens = require("../models/tokenModel")
 const sendEmail = require("../utils/sendEmail")
 
 
@@ -35,25 +35,24 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
 
+//Create a user
+  const user = await User.create({
+    name,
+    email,
+    password,
+  });
 
+  //   Generate Token
+  const token = generateToken(user._id);
 
-
-  //create user
-
-  const user = await User.create({ name, email, password })
-
-
-  //generate Jwt Token 
-  const token = generateToken(user._id)
-
-
+  // Send HTTP-only cookie
   res.cookie("token", token, {
-    path: '/',
+    path: "/",
     httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400),// 1 Day
+    expires: new Date(Date.now() + 1000 * 86400), // 1 day
     sameSite: "none",
-    secure: true
-  })
+    secure: true,
+  });
 
   if (user) {
     const { _id, name, email, photo, phone, bio } = user;
@@ -61,18 +60,16 @@ const registerUser = asyncHandler(async (req, res) => {
       _id,
       name,
       email,
-      phone,
       photo,
+      phone,
       bio,
       token,
-    })
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid user data");
   }
-  else {
-    res.status(400)
-    throw new Error('Invalid User Details')
-  }
-
-})
+});
 
 
 const loginUser=asyncHandler( async (req,res)=>{
@@ -317,8 +314,10 @@ const forgotPassword=asyncHandler( async (req,res)=>{
 
 //Reset password
 
-const resetPassword=asyncHandler( async (req,res)=>{
-   
+
+
+// Reset Password
+const resetPassword = asyncHandler(async (req, res) => {
   const { password } = req.body;
   const { resetToken } = req.params;
 
@@ -329,7 +328,7 @@ const resetPassword=asyncHandler( async (req,res)=>{
     .digest("hex");
 
   // fIND tOKEN in DB
-  const userToken = await token.findOne({
+  const userToken = await tokens.findOne({
     token: hashedToken,
     expiresAt: { $gt: Date.now() },
   });
@@ -346,8 +345,8 @@ const resetPassword=asyncHandler( async (req,res)=>{
   res.status(200).json({
     message: "Password Reset Successful, Please Login",
   });
-} )
- 
+});
+
 module.exports = {
   registerUser,
   loginUser,

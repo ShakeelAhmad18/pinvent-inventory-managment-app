@@ -63,7 +63,7 @@ const Home = () => {
 
 const NumberText=({num,text})=>{
     return(
-        <div className='--rm'>
+        <div className='--mr'>
            <h3 className='--color-white'>{num}</h3>
            <p className='--color-white'>{text}</p>
         </div>

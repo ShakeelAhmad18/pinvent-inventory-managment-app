@@ -147,3 +147,18 @@ export const getLoginStatus=async ()=>{
     }
 
  }
+
+ //Chnage password
+
+ export const changePassword=async (formData)=>{
+    try {
+
+        const res=await axios.patch(`${BACKEND_URL}/api/users/changepassword`,formData)
+        return res.data;
+        
+    } catch (error) {
+        const message=(error.response && error.response.data && 
+            error.response.data.message) || error.message || error.toString();
+        toast.error(message)
+    }
+ }
